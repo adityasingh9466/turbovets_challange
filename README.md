@@ -269,12 +269,12 @@ The app demonstrates:
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="mobile_chat_dark.png" alt="Mobile Chat Dark Interface" width="300">
-  <img src="mobile_chat_light.png" alt="Mobile Chat Light Interface" width="300">
-  <img src="mobile_dashboard.png" alt="Mobile Dashboard Interface" width="300">
-  <img src="web_chat.png" alt="Web Chat Interface" width="500">
-  <img src="web_knowledgebase.png" alt="Web Knowledgebase Interface" width="500">
-  <img src="web_livelogs.png" alt="Web Live Logs Interface" width="500">
+  <img src="screenshots/mobile_chat_dark.png" alt="Mobile Chat Dark Interface" width="300">
+  <img src="screenshots/mobile_chat_light.png" alt="Mobile Chat Light Interface" width="300">
+  <img src="screenshots/mobile_dashboard.png" alt="Mobile Dashboard Interface" width="300">
+  <img src="screenshots/web_chat.png" alt="Web Chat Interface" width="500">
+  <img src="screenshots/web_knowledgebase.png" alt="Web Knowledgebase Interface" width="500">
+  <img src="screenshots/web_livelogs.png" alt="Web Live Logs Interface" width="500">
 </div>
 
 <p align="center">
