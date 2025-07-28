@@ -1,0 +1,105 @@
+<div class="bg-white rounded-lg shadow-lg p-3 sm:p-6 max-w-full overflow-hidden">
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 space-y-3 sm:space-y-0">
+    <div class="flex items-center space-x-3">
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Live System Logs</h2>
+      <div class="flex items-center space-x-2">
+        <div [ngClass]="{ 'bg-green-500': isConnected, 'bg-red-500': !isConnected }"
+          class="w-3 h-3 rounded-full animate-pulse"></div>
+        <span class="text-xs sm:text-sm font-medium"
+          [ngClass]="{ 'text-green-600': isConnected, 'text-red-600': !isConnected }">
+          {{ isConnected ? 'Connected' : 'Disconnected' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+      <div class="text-xs sm:text-sm text-gray-600 order-2 sm:order-1">
+        {{ logs.length }} logs | {{ logCount }} total
+      </div>
+
+      <div class="flex items-center space-x-2 order-1 sm:order-2">
+        <button (click)="toggleConnection()"
+          [ngClass]="{ 'bg-red-600 hover:bg-red-700': isConnected, 'bg-green-600 hover:bg-green-700': !isConnected }"
+          class="px-3 py-2 text-white text-xs sm:text-sm rounded transition-all duration-150 ease-in-out min-h-[36px] touch-manipulation">
+          {{ isConnected ? 'Disconnect' : 'Connect' }}
+        </button>
+
+        <button (click)="downloadLogs()"
+          class="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm rounded transition-all duration-150 ease-in-out min-h-[36px] touch-manipulation">
+          Download
+        </button>
+
+        <button (click)="clearLogs()"
+          class="px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white text-xs sm:text-sm rounded transition-all duration-150 ease-in-out min-h-[36px] touch-manipulation">
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-scroll indicator -->
+  <div *ngIf="!shouldAutoScroll" class="mb-3">
+    <div
+      class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 py-2 rounded text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+      <span class="flex-1">Auto-scroll paused (scroll to bottom to resume)</span>
+      <button (click)="scrollToBottom()"
+        class="text-yellow-800 hover:text-yellow-900 underline text-xs transition-colors duration-150 ease-in-out self-start sm:self-auto touch-manipulation min-h-[32px] px-2 py-1">
+        Scroll to bottom
+      </button>
+    </div>
+  </div>
+
+  <!-- Logs Container -->
+  <div #logsContainer (scroll)="onScroll($event)"
+    class="h-[400px] sm:h-[500px] overflow-y-auto overflow-x-hidden bg-gray-900 text-gray-100 p-3 sm:p-4 font-mono text-xs sm:text-sm rounded-lg border-2 border-gray-200 scroll-smooth touch-pan-y">
+
+    <div *ngIf="logs.length === 0" class="text-center text-gray-500 mt-16 sm:mt-20">
+      <div class="text-3xl sm:text-4xl mb-4">📝</div>
+      <p class="text-sm sm:text-base">No logs available</p>
+      <p class="text-xs mt-2">Logs will appear here when the system is connected</p>
+    </div>
+
+    <div *ngFor="let log of logs; trackBy: trackByIndex"
+      class="mb-2 leading-relaxed hover:bg-gray-800 px-2 py-2 rounded transition-all duration-300 ease-in-out break-words">
+
+      <!-- Mobile Layout (stacked) -->
+      <div class="block sm:hidden">
+        <div class="flex flex-wrap items-center gap-2 mb-1">
+          <span class="text-gray-400 text-xs">[{{ log.timestamp }}]</span>
+          <span [ngClass]="{
+            'text-blue-400': log.level === 'INFO',
+            'text-yellow-400': log.level === 'WARN',
+            'text-red-400': log.level === 'ERROR',
+            'text-green-400': log.level === 'DEBUG'
+          }" class="font-semibold text-xs px-1 py-0.5 rounded bg-gray-800">{{ log.level }}</span>
+        </div>
+        <div class="text-gray-100 text-xs leading-relaxed break-words word-wrap">{{ log.message }}</div>
+      </div>
+
+      <!-- Desktop Layout (inline) -->
+      <div class="hidden sm:block">
+        <span class="text-gray-400">[{{ log.timestamp }}]</span>
+        <span [ngClass]="{
+          'text-blue-400': log.level === 'INFO',
+          'text-yellow-400': log.level === 'WARN',
+          'text-red-400': log.level === 'ERROR',
+          'text-green-400': log.level === 'DEBUG'
+        }" class="font-semibold ml-2">{{ log.level }}:</span>
+        <span class="ml-2 break-words">{{ log.message }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Stats -->
+  <div
+    class="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs sm:text-sm text-gray-600 space-y-2 sm:space-y-0">
+    <div class="break-words">
+      Last updated: {{ logs.length > 0 ? logs[logs.length - 1].timestamp : 'Never' }}
+    </div>
+    <div>
+      Auto-scroll: {{ shouldAutoScroll ? 'On' : 'Off' }}
+    </div>
+  </div>
+</div>

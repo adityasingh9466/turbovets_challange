@@ -1,0 +1,303 @@
+<div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
+  <!-- Add viewport meta tag if not already in your index.html -->
+  <div class="mb-4 md:mb-6">
+    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Support Tickets</h2>
+
+    <!-- Filter Controls -->
+    <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
+      <div class="flex items-center">
+        <label class="text-sm font-medium text-gray-700 mr-3">Filter by Status:</label>
+        <select [(ngModel)]="statusFilter"
+          class="border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out min-w-0 flex-1">
+          <option value="">All Statuses</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+
+      <div class="text-sm text-gray-600">
+        Showing {{ filteredTickets().length }} of {{ tickets.length }} tickets
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Card View (visible on small screens) -->
+  <div class="block md:hidden">
+    <div class="space-y-3">
+      <div *ngFor="let ticket of filteredTickets()" class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+        <div class="flex justify-between items-start mb-2">
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-900 text-sm">#{{ ticket.id }}</h3>
+            <p class="text-gray-700 text-sm mt-1">{{ ticket.subject }}</p>
+          </div>
+          <span [ngClass]="{
+                'bg-green-100 text-green-800': ticket.status === 'Open',
+                'bg-yellow-100 text-yellow-800': ticket.status === 'In Progress',
+                'bg-gray-100 text-gray-800': ticket.status === 'Closed'
+              }" class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ml-2 flex-shrink-0">
+            {{ ticket.status }}
+          </span>
+        </div>
+
+        <div class="text-xs text-gray-500 mb-3">
+          Created: {{ ticket.createdAt }}
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button (click)="viewTicket(ticket)"
+            class="bg-blue-500 text-white px-3 py-1 rounded text-xs font-medium hover:bg-blue-600 transition duration-150 ease-in-out">
+            View
+          </button>
+          <button (click)="editTicket(ticket)"
+            class="bg-green-500 text-white px-3 py-1 rounded text-xs font-medium hover:bg-green-600 transition duration-150 ease-in-out">
+            Edit
+          </button>
+          <button (click)="closeTicket(ticket)" [disabled]="ticket.status === 'Closed'"
+            [ngClass]="ticket.status === 'Closed' ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-red-500 text-white hover:bg-red-600'"
+            class="px-3 py-1 rounded text-xs font-medium transition duration-150 ease-in-out">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State for Mobile -->
+    <div *ngIf="filteredTickets().length === 0" class="text-center py-12">
+      <div class="text-gray-500">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <h3 class="text-sm font-medium text-gray-900 mb-1">No tickets found</h3>
+        <p class="text-sm text-gray-500">No tickets match the current filter criteria.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Table View (hidden on small screens) -->
+  <div class="hidden md:block">
+    <!-- Horizontal scroll container with proper touch handling -->
+    <div class="overflow-x-auto -mx-4 md:mx-0" style="overflow-scrolling: touch; -webkit-overflow-scrolling: touch;">
+      <div class="inline-block min-w-full align-middle">
+        <div class="overflow-hidden rounded-lg border border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Ticket ID
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Subject
+                </th>
+                <th scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Status
+                </th>
+                <th scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Created Date
+                </th>
+                <th scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let ticket of filteredTickets()" class="hover:bg-gray-50 transition duration-150 ease-in-out">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  #{{ ticket.id }}
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-900 max-w-xs">
+                  <div class="truncate">{{ ticket.subject }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span [ngClass]="{
+                        'bg-green-100 text-green-800': ticket.status === 'Open',
+                        'bg-yellow-100 text-yellow-800': ticket.status === 'In Progress',
+                        'bg-gray-100 text-gray-800': ticket.status === 'Closed'
+                      }" class="inline-flex px-2 py-1 text-xs font-semibold rounded-full">
+                    {{ ticket.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ ticket.createdAt }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <div class="flex space-x-2">
+                    <button (click)="viewTicket(ticket)"
+                      class="text-blue-600 hover:text-blue-900 transition duration-150 ease-in-out">
+                      View
+                    </button>
+                    <button (click)="editTicket(ticket)"
+                      class="text-green-600 hover:text-green-900 transition duration-150 ease-in-out">
+                      Edit
+                    </button>
+                    <button (click)="closeTicket(ticket)" [disabled]="ticket.status === 'Closed'"
+                      [ngClass]="ticket.status === 'Closed' ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:text-red-900'"
+                      class="transition duration-150 ease-in-out">
+                      Close
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Empty State for Desktop -->
+          <div *ngIf="filteredTickets().length === 0" class="text-center py-12">
+            <div class="text-gray-500">
+              <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <h3 class="text-sm font-medium text-gray-900 mb-1">No tickets found</h3>
+              <p class="text-sm text-gray-500">No tickets match the current filter criteria.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Ticket Modal (Mobile Optimized) -->
+<div *ngIf="showViewModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+  <div
+    class="relative top-4 md:top-20 mx-auto p-4 md:p-5 border w-full max-w-lg md:max-w-md shadow-lg rounded-md bg-white">
+    <div class="mt-3">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Ticket Details</h3>
+        <button (click)="closeViewModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div *ngIf="selectedTicket" class="space-y-4 max-h-96 overflow-y-auto">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Ticket ID</label>
+          <p class="mt-1 text-sm text-gray-900">#{{ selectedTicket.id }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Subject</label>
+          <p class="mt-1 text-sm text-gray-900 break-words">{{ selectedTicket.subject }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Status</label>
+          <span [ngClass]="{
+                'bg-green-100 text-green-800': selectedTicket.status === 'Open',
+                'bg-yellow-100 text-yellow-800': selectedTicket.status === 'In Progress',
+                'bg-gray-100 text-gray-800': selectedTicket.status === 'Closed'
+              }" class="mt-1 inline-flex px-2 py-1 text-xs font-semibold rounded-full">
+            {{ selectedTicket.status }}
+          </span>
+        </div>
+
+        <div *ngIf="selectedTicket.priority">
+          <label class="block text-sm font-medium text-gray-700">Priority</label>
+          <span [ngClass]="getPriorityClass(selectedTicket.priority)"
+            class="mt-1 inline-flex px-2 py-1 text-xs font-semibold rounded-full">
+            {{ selectedTicket.priority }}
+          </span>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Assignee</label>
+          <p class="mt-1 text-sm text-gray-900">{{ selectedTicket.assignee }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Created Date</label>
+          <p class="mt-1 text-sm text-gray-900">{{ selectedTicket.createdAt }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Description</label>
+          <p class="mt-1 text-sm text-gray-900 break-words">{{ selectedTicket.description }}</p>
+        </div>
+      </div>
+
+      <div class="flex justify-end mt-6">
+        <button (click)="closeViewModal()"
+          class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 min-w-[80px]">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Ticket Modal (Mobile Optimized) -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+  <div
+    class="relative top-4 md:top-20 mx-auto p-4 md:p-5 border w-full max-w-lg md:max-w-md shadow-lg rounded-md bg-white">
+    <div class="mt-3">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Edit Ticket</h3>
+        <button (click)="closeEditModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form *ngIf="editingTicket" class="space-y-4 max-h-96 overflow-y-auto">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Subject</label>
+          <input [(ngModel)]="editingTicket.subject" name="subject"
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none text-base">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Status</label>
+          <select [(ngModel)]="editingTicket.status" name="status"
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none text-base">
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Priority</label>
+          <select [(ngModel)]="editingTicket.priority" name="priority"
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none text-base">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Critical">Critical</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Assignee</label>
+          <input [(ngModel)]="editingTicket.assignee" name="assignee"
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none text-base">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea [(ngModel)]="editingTicket.description" name="description" rows="3"
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none resize-none text-base"></textarea>
+        </div>
+      </form>
+
+      <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 mt-6">
+        <button (click)="closeEditModal()"
+          class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 order-2 sm:order-1">
+          Cancel
+        </button>
+        <button (click)="saveTicket()"
+          class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 order-1 sm:order-2">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
