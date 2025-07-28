@@ -19,8 +19,7 @@ class ChatApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeProvider.themeMode,
-      home:
-          const WelcomeScreen(), // Changed from AppNavigation to WelcomeScreen
+      home: const WelcomeScreen(),
     );
   }
 }

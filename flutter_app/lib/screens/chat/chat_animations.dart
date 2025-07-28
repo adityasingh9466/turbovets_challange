@@ -1,10 +1,9 @@
-
-// lib/screens/chat/chat_animations.dart
+//Handling animations for chat
 import 'package:flutter/material.dart';
 
 class ChatAnimations {
   final TickerProvider vsync;
-  
+
   late final AnimationController _fabController;
   late final AnimationController _emojiController;
   late final AnimationController _replyController;

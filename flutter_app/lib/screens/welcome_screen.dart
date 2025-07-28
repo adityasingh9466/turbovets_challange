@@ -141,7 +141,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   children: [
                     const Spacer(flex: 2),
 
-                    // Logo/Image Container
                     FadeTransition(
                       opacity: _fadeAnimation,
                       child: ScaleTransition(

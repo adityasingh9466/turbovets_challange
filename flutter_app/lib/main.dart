@@ -8,6 +8,7 @@ import 'models/chat_message.dart';
 import 'models/message_type_adapter.dart';
 import 'providers/theme_provider.dart';
 
+//main class
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalNotification().initializeNotifications();
@@ -22,7 +23,7 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
-      child: const ChatApp(), // test change here 2
+      child: const ChatApp(),
     ),
   );
 }

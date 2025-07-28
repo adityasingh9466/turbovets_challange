@@ -1,8 +1,10 @@
 import 'package:hive/hive.dart';
+
 import '../constants/enums.dart';
 
 part 'chat_message.g.dart';
 
+//Hive to save chat in device
 @HiveType(typeId: 0)
 class ChatMessage extends HiveObject {
   @HiveField(0)

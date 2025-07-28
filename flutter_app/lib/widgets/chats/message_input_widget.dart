@@ -1,5 +1,4 @@
-
-// Updated MessageInputWidget using AppTheme and AppColors
+// MessageInputWidget using AppTheme and AppColors
 import 'package:flutter/material.dart';
 import 'package:turbovets_flutter_challange/constants/theme/colors.dart';
 import 'package:turbovets_flutter_challange/constants/theme/theme.dart';
@@ -153,8 +152,8 @@ class MessageInputWidget extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            color: isActive 
-                ? color 
+            color: isActive
+                ? color
                 : (isDark ? AppColors.textSecondary : Colors.grey[600]),
             size: 22,
           ),

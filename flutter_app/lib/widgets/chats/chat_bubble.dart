@@ -1,4 +1,4 @@
-// Updated ChatBubble using AppTheme and AppColors - No gradient, fixed dark mode text
+// ChatBubble class
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -151,7 +151,7 @@ class _ChatBubbleState extends State<ChatBubble> with TickerProviderStateMixin {
 
   bool get _shouldShowReactions => _isHoveringMessage || _showReactionsMobile;
 
-  // Custom decoration without gradient
+  // Custom decoration
   BoxDecoration _getChatBubbleDecoration({
     required bool isMe,
     required bool isDark,
@@ -160,13 +160,9 @@ class _ChatBubbleState extends State<ChatBubble> with TickerProviderStateMixin {
     Color backgroundColor;
 
     if (isMe) {
-      // My messages - solid primary color
       backgroundColor = AppColors.primary;
     } else {
-      // Incoming messages - different colors for light/dark mode
-      backgroundColor = isDark
-          ? AppColors.darkSurface // Dark surface for dark mode
-          : Colors.grey[100]!; // Light grey for light mode
+      backgroundColor = isDark ? AppColors.darkSurface : Colors.grey[100]!;
     }
 
     return BoxDecoration(
@@ -315,9 +311,7 @@ class _ChatBubbleState extends State<ChatBubble> with TickerProviderStateMixin {
               fontSize: 16,
               color: widget.isMe
                   ? Colors.white
-                  : (isDark
-                      ? Colors.white
-                      : AppColors.textPrimary), // Fixed dark mode text color
+                  : (isDark ? Colors.white : AppColors.textPrimary),
               height: 1.4,
             ),
           ),

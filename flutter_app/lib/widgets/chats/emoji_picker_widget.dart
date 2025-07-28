@@ -1,7 +1,6 @@
-
-// Updated EmojiPickerWidget using AppTheme and AppColors
-import 'package:flutter/material.dart';
+// EmojiPicker Widget
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flutter/material.dart';
 import 'package:turbovets_flutter_challange/constants/theme/colors.dart';
 
 class EmojiPickerWidget extends StatelessWidget {
@@ -15,7 +14,7 @@ class EmojiPickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       height: 250,
       decoration: BoxDecoration(
@@ -30,16 +29,19 @@ class EmojiPickerWidget extends StatelessWidget {
           emojiViewConfig: EmojiViewConfig(
             emojiSizeMax: 28,
             columns: 8,
-            backgroundColor: isDark ? AppColors.darkSurface : AppColors.background,
+            backgroundColor:
+                isDark ? AppColors.darkSurface : AppColors.background,
           ),
           categoryViewConfig: CategoryViewConfig(
             iconColorSelected: AppColors.primary,
             indicatorColor: AppColors.primary,
-            backgroundColor: isDark ? AppColors.darkBackground : AppColors.backgroundLight,
+            backgroundColor:
+                isDark ? AppColors.darkBackground : AppColors.backgroundLight,
           ),
           bottomActionBarConfig: BottomActionBarConfig(
             showBackspaceButton: true,
-            backgroundColor: isDark ? AppColors.darkBackground : AppColors.backgroundLight,
+            backgroundColor:
+                isDark ? AppColors.darkBackground : AppColors.backgroundLight,
           ),
         ),
       ),

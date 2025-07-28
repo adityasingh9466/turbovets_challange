@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+//typing indicator UI
 class TypingIndicator extends StatefulWidget {
   const TypingIndicator({super.key});
 

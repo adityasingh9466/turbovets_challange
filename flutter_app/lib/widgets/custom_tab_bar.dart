@@ -1,4 +1,4 @@
-// Improved CustomTabBar with modern selected state UI
+// CustomTabBar
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:turbovets_flutter_challange/constants/theme/colors.dart';
@@ -106,7 +106,6 @@ class _CustomTabBarState extends State<CustomTabBar>
   void didUpdateWidget(CustomTabBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Update pulse animation based on unread messages
     if (widget.hasUnreadMessages && !oldWidget.hasUnreadMessages) {
       _pulseController.repeat(reverse: true);
     } else if (!widget.hasUnreadMessages && oldWidget.hasUnreadMessages) {

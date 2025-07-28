@@ -1,4 +1,4 @@
-// Updated ReplyPreviewWidget using AppTheme and AppColors
+// ReplyPreviewWidget
 import 'dart:convert';
 
 import 'package:flutter/material.dart';

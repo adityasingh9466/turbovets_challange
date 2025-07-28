@@ -4,7 +4,7 @@ import '../constants/enums.dart';
 
 class MessageTypeAdapter extends TypeAdapter<MessageType> {
   @override
-  final int typeId = 1; // ⚠️ Must be unique across your app
+  final int typeId = 1;
 
   @override
   MessageType read(BinaryReader reader) {

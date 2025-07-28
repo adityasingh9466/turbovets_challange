@@ -1,6 +1,6 @@
-// Enhanced Image Preview Screen with better UX and animations
-import 'dart:typed_data';
+// Image Preview Screen
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +20,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
   late AnimationController _fadeController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
-  
+
   bool _isTyping = false;
   bool _showImageControls = true;
   final FocusNode _captionFocus = FocusNode();
@@ -28,18 +28,18 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
   @override
   void initState() {
     super.initState();
-    
+
     // Initialize animation controllers
     _slideController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    
+
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    
+
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 1),
       end: Offset.zero,
@@ -47,7 +47,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
       parent: _slideController,
       curve: Curves.easeOutCubic,
     ));
-    
+
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -55,18 +55,18 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
       parent: _fadeController,
       curve: Curves.easeOut,
     ));
-    
+
     // Start animations
     _slideController.forward();
     _fadeController.forward();
-    
+
     // Listen to text changes
     _captionController.addListener(() {
       setState(() {
         _isTyping = _captionController.text.isNotEmpty;
       });
     });
-    
+
     // Listen to focus changes
     _captionFocus.addListener(() {
       setState(() {
@@ -85,12 +85,12 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
   }
 
   void _onSend() async {
-    // Add haptic feedback
+    // haptic feedback
     HapticFeedback.selectionClick();
-    
+
     // Animate out before closing
     await _slideController.reverse();
-    
+
     if (mounted) {
       Navigator.pop(context, {
         'bytes': widget.imageBytes,
@@ -109,7 +109,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
@@ -125,7 +125,6 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
             Expanded(
               child: Stack(
                 children: [
-                  // Background blur effect
                   Positioned.fill(
                     child: ImageFiltered(
                       imageFilter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
@@ -135,7 +134,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
                       ),
                     ),
                   ),
-                  
+
                   // Main image
                   Center(
                     child: Hero(
@@ -162,14 +161,13 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
                       ),
                     ),
                   ),
-                  
+
                   // Image controls overlay
-                  if (_showImageControls)
-                    _buildImageControls(),
+                  if (_showImageControls) _buildImageControls(),
                 ],
               ),
             ),
-            
+
             // Caption input area
             _buildCaptionArea(isDark),
           ],
@@ -233,12 +231,12 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
                   icon: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: _isTyping 
+                      color: _isTyping
                           ? Colors.blue.withOpacity(0.8)
                           : Colors.black.withOpacity(0.3),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: _isTyping 
+                        color: _isTyping
                             ? Colors.blue
                             : Colors.white.withOpacity(0.2),
                         width: 1,
@@ -271,7 +269,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
             _buildControlButton(
               icon: Icons.zoom_in,
               onTap: () {
-                // Implement zoom functionality
+                // zoom functionality
                 HapticFeedback.lightImpact();
               },
             ),
@@ -279,7 +277,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
             _buildControlButton(
               icon: Icons.crop_rotate,
               onTap: () {
-                // Implement rotate functionality
+                // rotate functionality
                 HapticFeedback.lightImpact();
               },
             ),
@@ -344,7 +342,6 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
               ),
               const SizedBox(height: 8),
             ],
-            
             Container(
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.1),
@@ -394,7 +391,6 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen>
                 onSubmitted: (_) => _onSend(),
               ),
             ),
-            
             if (_isTyping) ...[
               const SizedBox(height: 12),
               Row(

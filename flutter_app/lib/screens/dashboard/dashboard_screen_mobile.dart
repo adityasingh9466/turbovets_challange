@@ -21,7 +21,7 @@ class _DashboardScreenMobileState extends State<DashboardScreen> {
         child: Stack(
           children: [
             WebView(
-              initialUrl: 'http://10.0.0.53:4200',
+              initialUrl: 'http://10.0.2.2:4200',
               javascriptMode: JavascriptMode.unrestricted,
               onWebResourceError: (_) {
                 if (mounted) setState(() => _hasError = true);

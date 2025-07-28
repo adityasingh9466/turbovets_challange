@@ -1,4 +1,4 @@
-// Clean and crisp Theme Toggle Switch without blur effects
+// Theme Toggle Switch
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

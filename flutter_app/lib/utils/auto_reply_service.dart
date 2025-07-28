@@ -1,8 +1,8 @@
-
-// lib/utils/auto_reply_service.dart
+//auto reply from a pre defined list
 import 'dart:math';
 
 class AutoReplyService {
+  //AI generated list
   static const List<String> _replies = [
     "How can I help you today? 😊",
     "Sure! Let me check that for you. 🔍",

@@ -1,17 +1,16 @@
-// Enhanced AppTheme with better integration and modern UI
+// AppTheme class
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'colors.dart';
 
 class AppTheme {
-  // Enhanced light theme with proper color scheme integration
   static final ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.background,
-    
-    // Enhanced AppBar theme with glassmorphism effect
+
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
@@ -29,8 +28,7 @@ class AppTheme {
         size: 24,
       ),
     ),
-    
-    // Enhanced color scheme with modern colors
+
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.accent,
@@ -44,8 +42,7 @@ class AppTheme {
       onError: Colors.white,
       outline: AppColors.border,
     ),
-    
-    // Enhanced input decoration theme with modern styling
+
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.inputBackground,
@@ -63,7 +60,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(24),
         borderSide: const BorderSide(
-          color: AppColors.primary, 
+          color: AppColors.primary,
           width: 2,
         ),
       ),
@@ -81,16 +78,16 @@ class AppTheme {
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
     ),
-    
-    // Enhanced floating action button theme with modern shadow
+
+    // floating action button theme
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       elevation: 6,
       shape: CircleBorder(),
     ),
-    
-    // Enhanced text theme with better typography
+
+    // text theme
     textTheme: const TextTheme(
       headlineMedium: TextStyle(
         color: AppColors.textPrimary,
@@ -121,8 +118,8 @@ class AppTheme {
         height: 1.4,
       ),
     ),
-    
-    // Enhanced card theme
+
+    // card theme
     cardTheme: CardTheme(
       elevation: 2,
       shadowColor: AppColors.shadowLight,
@@ -131,8 +128,8 @@ class AppTheme {
       ),
       color: AppColors.background,
     ),
-    
-    // Enhanced divider theme
+
+    // divider theme
     dividerTheme: const DividerThemeData(
       color: AppColors.border,
       thickness: 1,
@@ -140,14 +137,14 @@ class AppTheme {
     ),
   );
 
-  // Enhanced dark theme with proper color scheme integration
+  // dark theme
   static final ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.darkBackground,
-    
-    // Enhanced AppBar theme for dark mode with glassmorphism
+
+    // AppBar theme
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
@@ -165,8 +162,8 @@ class AppTheme {
         size: 24,
       ),
     ),
-    
-    // Enhanced dark color scheme with modern colors
+
+    // dark color scheme
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
       secondary: AppColors.accent,
@@ -180,8 +177,8 @@ class AppTheme {
       onError: Colors.white,
       outline: AppColors.borderDark,
     ),
-    
-    // Enhanced input decoration theme for dark mode with modern styling
+
+    // input decoration theme
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.inputBackgroundDark,
@@ -199,7 +196,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(24),
         borderSide: const BorderSide(
-          color: AppColors.primary, 
+          color: AppColors.primary,
           width: 2,
         ),
       ),
@@ -217,16 +214,16 @@ class AppTheme {
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
     ),
-    
-    // Enhanced floating action button theme for dark mode with modern shadow
+
+    // floating action button theme
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       elevation: 8,
       shape: CircleBorder(),
     ),
-    
-    // Enhanced text theme for dark mode with better typography
+
+    // text theme
     textTheme: const TextTheme(
       headlineMedium: TextStyle(
         color: AppColors.textDark,
@@ -257,8 +254,8 @@ class AppTheme {
         height: 1.4,
       ),
     ),
-    
-    // Enhanced card theme for dark mode
+
+    // card theme
     cardTheme: CardTheme(
       elevation: 4,
       shadowColor: AppColors.shadowDark,
@@ -267,16 +264,16 @@ class AppTheme {
       ),
       color: AppColors.darkSurface,
     ),
-    
-    // Enhanced divider theme for dark mode
+
+    // divider theme
     dividerTheme: const DividerThemeData(
       color: AppColors.borderDark,
       thickness: 1,
       space: 1,
     ),
   );
-  
-  // Enhanced helper method for chat bubbles with modern design
+
+  // helper method
   static BoxDecoration chatBubbleDecoration({
     required bool isMe,
     required bool isDark,
@@ -331,7 +328,7 @@ class AppTheme {
         ),
         borderRadius: _getBubbleBorderRadius(isMe),
         border: Border.all(
-          color: isDark 
+          color: isDark
               ? AppColors.borderDark.withOpacity(0.3)
               : AppColors.border.withOpacity(0.4),
           width: 0.5,
@@ -356,8 +353,8 @@ class AppTheme {
       );
     }
   }
-  
-  // Enhanced helper method for border radius (unchanged signature)
+
+  // helper method for border radius
   static BorderRadius _getBubbleBorderRadius(bool isMe) {
     return BorderRadius.only(
       topLeft: const Radius.circular(20),
@@ -366,8 +363,8 @@ class AppTheme {
       bottomRight: isMe ? const Radius.circular(6) : const Radius.circular(20),
     );
   }
-  
-  // Enhanced helper method for input container with modern design
+
+  // helper method for input container
   static BoxDecoration inputContainerDecoration({
     required bool isDark,
     required bool hasFocus,
@@ -413,12 +410,12 @@ class AppTheme {
       ],
     );
   }
-  
-  // Enhanced helper method for reaction picker with modern design
+
+  // helper method for reaction picker
   static BoxDecoration reactionPickerDecoration(bool isDark) {
     return BoxDecoration(
       gradient: LinearGradient(
-        colors: isDark 
+        colors: isDark
             ? [
                 const Color(0xFF2A3441),
                 const Color(0xFF1E2936),
@@ -432,7 +429,7 @@ class AppTheme {
       ),
       borderRadius: BorderRadius.circular(30),
       border: Border.all(
-        color: isDark 
+        color: isDark
             ? AppColors.borderDark.withOpacity(0.4)
             : AppColors.border.withOpacity(0.3),
         width: 1,
@@ -446,7 +443,7 @@ class AppTheme {
           offset: const Offset(0, 6),
           spreadRadius: 0,
         ),
-        // Inner highlight for modern look
+        // Inner highlight
         BoxShadow(
           color: (isDark ? Colors.white : Colors.white).withOpacity(0.05),
           blurRadius: 1,

@@ -1,4 +1,4 @@
-// lib/screens/chat/chat_controller.dart
+//Logic fo chat page
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -12,8 +12,8 @@ import '../../models/chat_message.dart';
 class ChatController {
   final VoidCallback? onNewMessage;
   final VoidCallback onStateChanged;
-  final bool Function() isMounted; // Add this function to check mounted state
-  final VoidCallback? onScrollToBottom; // Add callback for scrolling to bottom
+  final bool Function() isMounted;
+  final VoidCallback? onScrollToBottom;
 
   late final Box<ChatMessage> chatBox;
 
@@ -41,8 +41,8 @@ class ChatController {
   ChatController({
     required this.onNewMessage,
     required this.onStateChanged,
-    required this.isMounted, // Add this parameter
-    this.onScrollToBottom, // Add optional scroll callback
+    required this.isMounted,
+    this.onScrollToBottom,
   }) {
     chatBox = Hive.box<ChatMessage>('chatMessages');
   }
@@ -62,7 +62,7 @@ class ChatController {
   }
 
   void setShowFab(bool show) {
-    if (!isMounted()) return; // Check if mounted before updating state
+    if (!isMounted()) return;
     _showFab = show;
     onStateChanged();
   }
@@ -123,7 +123,6 @@ class ChatController {
     clearReplyPreview();
     _scheduleAutoReplies();
 
-    // Scroll to bottom after sending message
     if (onScrollToBottom != null) {
       onScrollToBottom!();
     }
@@ -150,7 +149,6 @@ class ChatController {
     clearReplyPreview();
     _scheduleAutoReplies();
 
-    // Scroll to bottom after sending image
     if (onScrollToBottom != null) {
       onScrollToBottom!();
     }
@@ -174,14 +172,12 @@ class ChatController {
   void _simulateAutoReply(int replyNumber) {
     print("_simulate $_isPageVisible");
     _isTyping = true;
-    // Check if mounted before starting typing animation
     if (_isPageVisible) {
       onStateChanged();
       onScrollToBottom!();
     }
 
     Future.delayed(const Duration(milliseconds: 1500), () {
-      // Check if still mounted before processing the reply
       if (!_isPageVisible) {
         LocalNotification().showLocalNotification();
       }
@@ -197,20 +193,16 @@ class ChatController {
       );
 
       chatBox.add(message);
-      // if (!isMounted()) return;
       if (!_isPageVisible && onNewMessage != null) {
         onNewMessage!();
       }
       ;
       if (!_isPageVisible) return;
 
-      // Final mounted check before updating state
       if (!isMounted()) return;
       _isTyping = false;
       onStateChanged();
 
-      // Always scroll to bottom after receiving auto reply, with a small delay
-      // to ensure the message is rendered first
       if (onScrollToBottom != null) {
         Future.delayed(const Duration(milliseconds: 100), () {
           if (isMounted()) {
@@ -221,7 +213,5 @@ class ChatController {
     });
   }
 
-  void dispose() {
-    // Clean up any resources if needed
-  }
+  void dispose() {}
 }

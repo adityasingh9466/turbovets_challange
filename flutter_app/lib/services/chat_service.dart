@@ -1,10 +1,11 @@
-
-// lib/services/chat_service.dart
+//Service page for chat
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:hive_flutter/hive_flutter.dart';
-import '../models/chat_message.dart';
+
 import '../constants/enums.dart';
+import '../models/chat_message.dart';
 
 class ChatService {
   static const String _boxName = 'chatMessages';
@@ -48,7 +49,7 @@ class ChatService {
     MessageType? replyToType,
   }) {
     final finalContent = replyTo != null ? '↪️ $replyTo\n$content' : content;
-    
+
     return ChatMessage(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       content: finalContent,

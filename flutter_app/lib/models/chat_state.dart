@@ -1,5 +1,4 @@
-
-// lib/models/chat_state.dart
+//Chat modal
 import '../constants/enums.dart';
 
 class ChatState {
@@ -37,14 +36,15 @@ class ChatState {
       replyPreview: clearReply ? null : (replyPreview ?? this.replyPreview),
       replyType: clearReply ? null : (replyType ?? this.replyType),
       isEmojiVisible: isEmojiVisible ?? this.isEmojiVisible,
-      reactionPickerMessageId: clearReactionPicker ? null : (reactionPickerMessageId ?? this.reactionPickerMessageId),
+      reactionPickerMessageId: clearReactionPicker
+          ? null
+          : (reactionPickerMessageId ?? this.reactionPickerMessageId),
       showFab: showFab ?? this.showFab,
       isPageVisible: isPageVisible ?? this.isPageVisible,
     );
   }
 }
 
-// lib/utils/date_helper.dart (Updated version)
 class DateHelper {
   static String format(DateTime dateTime) {
     final now = DateTime.now();
@@ -70,8 +70,8 @@ class DateHelper {
 
   static bool isSameDay(DateTime date1, DateTime date2) {
     return date1.year == date2.year &&
-           date1.month == date2.month &&
-           date1.day == date2.day;
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   static bool isToday(DateTime date) {

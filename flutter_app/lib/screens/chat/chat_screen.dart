@@ -1,4 +1,4 @@
-// lib/screens/chat/chat_screen.dart
+//Ui handling for the chat screen
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -39,9 +39,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     _controller = ChatController(
       onNewMessage: widget.onNewMessage,
       onStateChanged: () => setState(() {}),
-      isMounted: () => mounted, // Pass the mounted check function
-      onScrollToBottom: () =>
-          _scrollToBottomForNewMessage(), // Use new message scroll method
+      isMounted: () => mounted,
+      onScrollToBottom: () => _scrollToBottomForNewMessage(),
     );
     _animations = ChatAnimations(vsync: this);
 
@@ -57,11 +56,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _setupScrollListener() {
     _scrollController.addListener(() {
-      // Check if user is at the bottom (with small tolerance)
       final isAtBottom = _scrollController.offset >=
           (_scrollController.position.maxScrollExtent - 50);
 
-      // Show FAB only when user scrolled up more than 100px AND not at bottom
       final shouldShowFab = _scrollController.offset > 100 && !isAtBottom;
 
       if (shouldShowFab != _controller.showFab) {
@@ -98,7 +95,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     _controller.sendTextMessage(text);
     _textController.clear();
     _animations.playMessageAnimation();
-    // Scroll is now handled in the controller
   }
 
   Future<void> _sendImageMessage() async {
@@ -114,7 +110,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       if (result != null) {
         _controller.sendImageMessage(result);
         _animations.playMessageAnimation();
-        // Scroll is now handled in the controller
       }
     }
   }
@@ -164,8 +159,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       final maxScroll = _scrollController.position.maxScrollExtent;
       _scrollController.animateTo(
         maxScroll,
-        duration: const Duration(
-            milliseconds: 300), // Faster animation for new messages
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
       );
     });
@@ -315,12 +309,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   Widget _buildMessageItem(ChatMessage msg, int index) {
     return TweenAnimationBuilder<double>(
-      duration:
-          Duration(milliseconds: 150 + (index * 25)), // Much faster animation
+      duration: Duration(milliseconds: 150 + (index * 25)),
       tween: Tween(begin: 0, end: 1),
       builder: (context, value, child) {
         return Transform.translate(
-          offset: Offset(0, 15 * (1 - value)), // Reduced offset distance
+          offset: Offset(0, 15 * (1 - value)),
           child: Opacity(
             opacity: value,
             child: Dismissible(
