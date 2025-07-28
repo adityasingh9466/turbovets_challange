@@ -22,7 +22,7 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
-      child: const ChatApp(), // test change
+      child: const ChatApp(), // test change here 2
     ),
   );
 }
