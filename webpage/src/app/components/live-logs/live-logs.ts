@@ -88,7 +88,7 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
     if (!this.logsContainer) return;
 
     const element = this.logsContainer.nativeElement;
-    const tolerance = this.isMobile ? 10 : 3; // Larger tolerance for mobile
+    const tolerance = this.isMobile ? 10 : 3;
     const isAtBottom = element.scrollHeight - element.clientHeight <= element.scrollTop + tolerance;
 
     if (isAtBottom !== this.shouldAutoScroll) {
@@ -133,21 +133,18 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
         this.logs.push(newLog);
         if (this.logs.length > 100) this.logs.shift();
       }
-    }, this.isMobile ? 3000 : 2000); // Slower on mobile to reduce battery drain
+    }, this.isMobile ? 3000 : 2000);
   }
 
   onScroll(event: any): void {
-    // Ignore programmatic scrolls completely
     if (this.programmaticScroll || this.pendingScroll) return;
 
     const element = event.target;
-    const tolerance = this.isMobile ? 10 : 3; // Larger tolerance for mobile touch scrolling
+    const tolerance = this.isMobile ? 10 : 3;
     const isAtBottom = element.scrollHeight - element.clientHeight <= element.scrollTop + tolerance;
 
-    // Clear existing timeout
     if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
 
-    // Immediate state update for better responsiveness
     const newAutoScrollState = isAtBottom;
 
     if (newAutoScrollState !== this.shouldAutoScroll) {
@@ -157,7 +154,6 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
       }
     }
 
-    // Debounced confirmation with longer delay for mobile
     const debounceDelay = this.isMobile ? 150 : 50;
     this.scrollTimeout = setTimeout(() => {
       const atBottom = element.scrollHeight - element.clientHeight <= element.scrollTop + tolerance;
@@ -182,7 +178,7 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
       const element = this.logsContainer.nativeElement;
 
       if (this.isMobile) {
-        // Mobile-specific smooth scrolling
+        // Mobile-specific scrolling
         element.scrollTo({
           top: element.scrollHeight,
           behavior: 'smooth'
@@ -192,7 +188,6 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
         element.scrollTop = element.scrollHeight;
       }
 
-      // Ensure we stay at bottom even after potential reflows
       requestAnimationFrame(() => {
         if (this.isMobile) {
           element.scrollTo({
@@ -206,7 +201,7 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
         // Reset flag after ensuring scroll is complete
         setTimeout(() => {
           this.programmaticScroll = false;
-        }, this.isMobile ? 300 : 150); // Longer delay for mobile smooth scroll
+        }, this.isMobile ? 300 : 150);
       });
     } catch (err) {
       console.error('Could not scroll to bottom:', err);
@@ -243,7 +238,6 @@ export class LiveLogsComponent implements OnInit, AfterViewChecked {
       // For mobile, open in new tab as a fallback
       const newWindow = window.open(url, '_blank');
       if (!newWindow) {
-        // If popup blocked, try direct click
         link.click();
       }
     } else {

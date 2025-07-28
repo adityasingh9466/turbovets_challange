@@ -11,15 +11,17 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return MaterialApp(
-      title: 'TurboVets Flutter Project',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: themeProvider.themeMode,
-      home: const WelcomeScreen(),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          title: 'TurboVets Flutter Project',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: themeProvider.themeMode,
+          home: const WelcomeScreen(),
+        );
+      },
     );
   }
 }

@@ -163,10 +163,7 @@ export class TicketViewerComponent {
     }
   ];
 
-  /**
-   * Filters tickets based on the selected status filter
-   * @returns Array of filtered tickets
-   */
+
   filteredTickets(): Ticket[] {
     if (!this.statusFilter) {
       return this.tickets;
@@ -174,28 +171,19 @@ export class TicketViewerComponent {
     return this.tickets.filter(ticket => ticket.status === this.statusFilter);
   }
 
-  /**
-   * Opens the view modal for a specific ticket
-   * @param ticket - The ticket to view
-   */
+
   viewTicket(ticket: Ticket): void {
     this.selectedTicket = { ...ticket };
     this.showViewModal = true;
   }
 
-  /**
-   * Opens the edit modal for a specific ticket
-   * @param ticket - The ticket to edit
-   */
+
   editTicket(ticket: Ticket): void {
     this.editingTicket = { ...ticket };
     this.showEditModal = true;
   }
 
-  /**
-   * Closes a ticket after user confirmation
-   * @param ticket - The ticket to close
-   */
+
   closeTicket(ticket: Ticket): void {
     const confirmClose = confirm(`Are you sure you want to close ticket #${ticket.id}?`);
     if (confirmClose) {
@@ -206,9 +194,7 @@ export class TicketViewerComponent {
     }
   }
 
-  /**
-   * Saves the edited ticket and closes the edit modal
-   */
+
   saveTicket(): void {
     if (this.editingTicket) {
       const ticketIndex = this.tickets.findIndex(t => t.id === this.editingTicket!.id);
@@ -219,27 +205,19 @@ export class TicketViewerComponent {
     }
   }
 
-  /**
-   * Closes the view modal and resets selected ticket
-   */
+
   closeViewModal(): void {
     this.showViewModal = false;
     this.selectedTicket = null;
   }
 
-  /**
-   * Closes the edit modal and resets editing ticket
-   */
+
   closeEditModal(): void {
     this.showEditModal = false;
     this.editingTicket = null;
   }
 
-  /**
-   * Returns the appropriate CSS class for priority badges
-   * @param priority - The priority level
-   * @returns CSS class string for styling priority badges
-   */
+
   getPriorityClass(priority: string): string {
     switch (priority) {
       case 'Critical':
@@ -255,10 +233,7 @@ export class TicketViewerComponent {
     }
   }
 
-  /**
-   * Adds a new ticket to the tickets array
-   * @param newTicket - The new ticket to add
-   */
+
   addTicket(newTicket: Omit<Ticket, 'id'>): void {
     const nextId = (Math.max(...this.tickets.map(t => parseInt(t.id))) + 1)
       .toString()
@@ -272,10 +247,7 @@ export class TicketViewerComponent {
     this.tickets.push(ticket);
   }
 
-  /**
-   * Deletes a ticket from the tickets array
-   * @param ticketId - The ID of the ticket to delete
-   */
+
   deleteTicket(ticketId: string): void {
     const confirmDelete = confirm(`Are you sure you want to delete ticket #${ticketId}?`);
     if (confirmDelete) {
@@ -283,29 +255,17 @@ export class TicketViewerComponent {
     }
   }
 
-  /**
-   * Gets the count of tickets by status
-   * @param status - The status to count
-   * @returns Number of tickets with the specified status
-   */
+
   getTicketCountByStatus(status: 'Open' | 'In Progress' | 'Closed'): number {
     return this.tickets.filter(ticket => ticket.status === status).length;
   }
 
-  /**
-   * Gets the count of tickets by priority
-   * @param priority - The priority to count
-   * @returns Number of tickets with the specified priority
-   */
+
   getTicketCountByPriority(priority: 'Low' | 'Medium' | 'High' | 'Critical'): number {
     return this.tickets.filter(ticket => ticket.priority === priority).length;
   }
 
-  /**
-   * Sorts tickets by a specified field
-   * @param field - The field to sort by
-   * @param order - The sort order (asc or desc)
-   */
+
   sortTickets(field: keyof Ticket, order: 'asc' | 'desc' = 'asc'): void {
     this.tickets.sort((a, b) => {
       const aValue = a[field] || '';
@@ -319,11 +279,7 @@ export class TicketViewerComponent {
     });
   }
 
-  /**
-   * Searches tickets by subject or description
-   * @param searchTerm - The term to search for
-   * @returns Array of tickets matching the search term
-   */
+
   searchTickets(searchTerm: string): Ticket[] {
     if (!searchTerm.trim()) {
       return this.tickets;
@@ -336,10 +292,7 @@ export class TicketViewerComponent {
     );
   }
 
-  /**
-   * Exports tickets to CSV format
-   * @returns CSV string of all tickets
-   */
+
   exportToCSV(): string {
     const headers = ['ID', 'Subject', 'Status', 'Priority', 'Assignee', 'Created Date', 'Description'];
     const csvRows = [headers.join(',')];
@@ -360,9 +313,8 @@ export class TicketViewerComponent {
     return csvRows.join('\n');
   }
 
-  /**
-   * Downloads the tickets as a CSV file
-   */
+
+
   downloadCSV(): void {
     const csvContent = this.exportToCSV();
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });

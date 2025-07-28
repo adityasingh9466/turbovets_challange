@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: Custom scrollbar using Tailwind utilities */
 @layer utilities {
     .scrollbar-thin {
         scrollbar-width: thin;

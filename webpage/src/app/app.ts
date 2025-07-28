@@ -7,7 +7,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './app.html',
-  // Removed: styleUrl: './app.css',
+
 })
 export class AppComponent {
   isSidebarOpen = false;

@@ -1,5 +1,5 @@
 <div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
-  <!-- Add viewport meta tag if not already in your index.html -->
+
   <div class="mb-4 md:mb-6">
     <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Support Tickets</h2>
 
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <!-- Mobile Card View (visible on small screens) -->
+  <!-- Mobile Card View -->
   <div class="block md:hidden">
     <div class="space-y-3">
       <div *ngFor="let ticket of filteredTickets()" class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
@@ -75,9 +75,9 @@
     </div>
   </div>
 
-  <!-- Desktop Table View (hidden on small screens) -->
+  <!-- Desktop Table View -->
   <div class="hidden md:block">
-    <!-- Horizontal scroll container with proper touch handling -->
+
     <div class="overflow-x-auto -mx-4 md:mx-0" style="overflow-scrolling: touch; -webkit-overflow-scrolling: touch;">
       <div class="inline-block min-w-full align-middle">
         <div class="overflow-hidden rounded-lg border border-gray-200">
@@ -163,7 +163,7 @@
   </div>
 </div>
 
-<!-- View Ticket Modal (Mobile Optimized) -->
+<!-- View Ticket Modal -->
 <div *ngIf="showViewModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
   <div
     class="relative top-4 md:top-20 mx-auto p-4 md:p-5 border w-full max-w-lg md:max-w-md shadow-lg rounded-md bg-white">
@@ -233,7 +233,7 @@
   </div>
 </div>
 
-<!-- Edit Ticket Modal (Mobile Optimized) -->
+<!-- Edit Ticket Modal -->
 <div *ngIf="showEditModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
   <div
     class="relative top-4 md:top-20 mx-auto p-4 md:p-5 border w-full max-w-lg md:max-w-md shadow-lg rounded-md bg-white">

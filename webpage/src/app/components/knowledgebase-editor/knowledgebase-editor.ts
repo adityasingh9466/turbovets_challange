@@ -538,7 +538,7 @@ src/
       }
     });
 
-    // Apply styles to tables - with better mobile handling
+    // Apply styles to tables
     const tableElements = container.querySelectorAll('table');
     tableElements.forEach((el: Element) => {
       if (this.isMobile) {
@@ -588,7 +588,7 @@ src/
       (el as HTMLElement).style.cssText = 'word-break: break-all !important; overflow-wrap: break-word !important;';
     });
 
-    // Apply styles to strong/bold
+    // Apply styles to strong
     const strongElements = container.querySelectorAll('strong');
     strongElements.forEach((el: Element) => {
       el.className = 'font-semibold text-gray-900 break-words';
@@ -783,8 +783,6 @@ src/
       this.isMobileDownloadMenuOpen = false;
     }
 
-    // Force style reapplication when switching to a view mode that includes preview
-    // This fixes the issue when coming from editor-only mode
     if (mode === 'split' || mode === 'preview') {
       setTimeout(() => {
         this.applyTailwindStyles();
